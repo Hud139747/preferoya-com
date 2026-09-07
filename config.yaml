@@ -1,0 +1,5 @@
+static:
+  files:
+    - 'index.html'
+    - 'assets/**'
+  index: true
