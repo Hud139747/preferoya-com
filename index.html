@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1"><title>PreferoYa.com — Compara precios en Panamá</title><meta name="description" content="PreferoYa.com: compara precios de celulares, computadoras, gaming, audio y electrónica en Panamá.">
-<meta name="theme-color" content="#079cff"><link rel="icon" href="assets/logo.png"><style>
+<meta name="theme-color" content="#079cff"><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Crect width=%2264%22 height=%2264%22 rx=%2232%22 fill=%22%23079cff%22/%3E%3Ctext x=%2232%22 y=%2244%22 text-anchor=%22middle%22 font-family=%22Arial%22 font-size=%2236%22 font-weight=%22900%22 fill=%22white%22%3EP%3C/text%3E%3C/svg%3E"><style>
 :root{
   --blue:#079cff;
   --blue-dark:#1260ff;
@@ -65,15 +65,17 @@ header{
   display:flex;
   align-items:center;
   gap:10px;
-  font-weight:900;
-  font-size:22px;
+  font-weight:950;
+  font-size:25px;
+  letter-spacing:-.7px;
+  white-space:nowrap;
 }
 
 .brand-logo{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#079cff,#1260ff);color:white;font-weight:950;font-size:22px;box-shadow:0 8px 20px #079cff35}
-}
 
 .brand span{
   color:#0b3b83;
+  line-height:1;
 }
 
 .brand b{
@@ -574,7 +576,8 @@ footer{
   }
 
   .brand{
-    font-size:19px;
+    font-size:22px;
+    letter-spacing:-.6px;
   }
 
   .hero{
@@ -603,7 +606,7 @@ footer{
 }
 </style></head><body><!-- HEADER --><header>
   <div class="container nav"><a class="brand" href="#">
-  <img src="assets/logo.png" alt="PreferoYa.com">
+  <div class="brand-logo">P</div>
   <span>Prefero<b>Ya.com</b></span>
 </a>
 
