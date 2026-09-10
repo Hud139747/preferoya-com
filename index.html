@@ -852,10 +852,10 @@ const products = [
     source:'Desde $914.99 · 14 ofertas / 8 fuentes',
     icon:'📱',
     offers:[
-      {store:'Flash Market PTY',price:914.99,url:'https://www.flashmarketpty.com/'},
-      {store:'Tecnoland',price:null,url:'https://tecnoland.catalog.kyte.site/'},
-      {store:'Panafoto',price:null,url:'https://www.panafoto.com/iphone-17-256gb-blanco-157849.html'},
-      {store:'Multimax',price:null,url:'https://www.multimax.net/products/iphone-17-6-3-256gb'}
+      {store:'Flash Market PTY',price:914.99,url:'#'},
+      {store:'Tecnoland',price:null,url:'#'},
+      {store:'Panafoto',price:null,url:'https://www.panafoto.com/'},
+      {store:'Multimax',price:null,url:'https://www.multimax.net/'}
     ]
   },
   {
@@ -879,7 +879,7 @@ const products = [
     offers:[
       {store:'Panafoto',price:null,url:'https://www.panafoto.com/'},
       {store:'Multimax',price:null,url:'https://www.multimax.net/'},
-      {store:'Otros comercios',price:null,url:'https://www.google.com/search?q='+encodeURIComponent(p.name+' Panama tienda')}
+      {store:'Otros comercios',price:null,url:'#'}
     ]
   },
   {
@@ -890,7 +890,7 @@ const products = [
     icon:'🎮',
     offers:[
       {store:'Panafoto',price:629.95,url:'https://www.panafoto.com/'},
-      {store:'Otros comercios',price:null,url:'https://www.google.com/search?q='+encodeURIComponent(p.name+' Panama tienda')}
+      {store:'Otros comercios',price:null,url:'#'}
     ]
   },
   {
@@ -901,7 +901,7 @@ const products = [
     icon:'🎧',
     offers:[
       {store:'Arrocha',price:149,url:'https://arrocha.com/'},
-      {store:'MacPower',price:null,url:'https://macpowerstore.com/'},
+      {store:'MacPower',price:null,url:'#'},
       {store:'Titan',price:null,url:'https://titan.com.pa/'},
       {store:'Panafoto',price:null,url:'https://www.panafoto.com/'}
     ]
@@ -916,7 +916,7 @@ const products = [
       {store:'Prixe Games',price:510,url:'https://prixegames.com/'},
       {store:'PanaStop',price:null,url:'https://panastop.com/'},
       {store:'Multimax',price:null,url:'https://www.multimax.net/'},
-      {store:'Panafoto / Photura',price:null,url:'https://www.photura.com/'}
+      {store:'Panafoto / Photura',price:null,url:'#'}
     ]
   },
   {
@@ -928,7 +928,7 @@ const products = [
     offers:[
       {store:'Samsung Panamá',price:459,url:'https://shop.samsung.com/latin/pa/'},
       {store:'Multimax',price:null,url:'https://www.multimax.net/'},
-      {store:'Otros comercios',price:null,url:'https://www.google.com/search?q='+encodeURIComponent(p.name+' Panama tienda')}
+      {store:'Otros comercios',price:null,url:'#'}
     ]
   },
   {
@@ -940,7 +940,7 @@ const products = [
     offers:[
       {store:'PanaStop',price:39.99,url:'https://panastop.com/'},
       {store:'Prixe Games',price:null,url:'https://prixegames.com/'},
-      {store:'Photura',price:null,url:'https://www.photura.com/'},
+      {store:'Photura',price:null,url:'#'},
       {store:'Panafoto',price:null,url:'https://www.panafoto.com/'}
     ]
   },
@@ -953,7 +953,7 @@ const products = [
     offers:[
       {store:'PanaStop',price:309.99,url:'https://panastop.com/'},
       {store:'Panafoto',price:null,url:'https://www.panafoto.com/'},
-      {store:'Selectopa',price:null,url:'https://selectopa.com/'},
+      {store:'Selectopa',price:null,url:'#'},
       {store:'Titan',price:null,url:'https://titan.com.pa/'}
     ]
   },
@@ -1073,7 +1073,7 @@ function showOffers(i){
            href="${o.url}"
            target="_blank"
            rel="noopener noreferrer"
-           >
+           onclick="if(this.getAttribute('href')==='#'){event.preventDefault();alert('El enlace de esta tienda todavía no está configurado.');}">
           Ir a la tienda
         </a>
       </div>
