@@ -1071,29 +1071,32 @@ function showOffers(i){
   const p = products[i];
 
   document.getElementById('modalTitle').textContent = p.name;
-
   document.getElementById('modalMeta').textContent = p.source;
 
   document.getElementById('offers').innerHTML =
-    p.offers.map(x=>{
+    p.offers.map(o=>`
+      <div class="offer">
 
-      const parts = x.split(' — ');
-
-      return `
-        <div class="offer">
-
-          <span>
-            ${parts[0]}
+        <div class="offer-info">
+          <span class="offer-store">${o.store}</span>
+          <span class="offer-price">
+            ${o.price !== null ? money(o.price) : 'Precio por verificar'}
           </span>
-
-          <strong>
-            ${parts.length > 1 ? parts.slice(1).join(' — ') : 'Consultar'}
-          </strong>
-
         </div>
-      `;
 
-    }).join('');
+        <a class="store-btn"
+           href="${o.url}"
+           target="_blank"
+           rel="noopener noreferrer"
+           onclick="if(this.getAttribute('href')==='#'){
+             event.preventDefault();
+             alert('El enlace de esta tienda todavía no está configurado.');
+           }">
+          Ir a la tienda
+        </a>
+
+      </div>
+    `).join('');
 
   document.getElementById('modal').classList.add('show');
 
