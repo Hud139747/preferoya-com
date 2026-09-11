@@ -3,7 +3,7 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1"><title>PreferoYa.com — Compara precios en Panamá</title><meta name="description" content="PreferoYa.com: compara precios de celulares, computadoras, gaming, audio y electrónica en Panamá.">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>PreferoYa.com — Encuentra lo que buscas en Panamá</title><meta name="description" content="PreferoYa.com te ayuda a encontrar productos, servicios y negocios en Panamá. Busca, compara y encuentra mejores opciones.">
 <meta name="theme-color" content="#079cff"><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Crect width=%2264%22 height=%2264%22 rx=%2232%22 fill=%22%23079cff%22/%3E%3Ctext x=%2232%22 y=%2244%22 text-anchor=%22middle%22 font-family=%22Arial%22 font-size=%2236%22 font-weight=%22900%22 fill=%22white%22%3EP%3C/text%3E%3C/svg%3E"><style>
 :root{
   --blue:#079cff;
@@ -642,6 +642,15 @@ footer{
   .offer{align-items:flex-start;flex-wrap:wrap;}
   .store-btn{width:100%;text-align:center;}
 }
+
+/* PREFEROYA NEXT */
+.search-modes{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.mode{border:1px solid var(--line);background:white;color:var(--ink);padding:9px 13px;border-radius:999px;font-weight:800;cursor:pointer}
+.mode.active{background:var(--blue);color:white;border-color:var(--blue)}
+.popular{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-top:12px;color:var(--muted);font-size:13px}
+.popular button{border:0;background:transparent;color:var(--blue-dark);font-weight:750;cursor:pointer;padding:3px 4px}
+.cat.future{border-style:dashed;opacity:.82}
+@media(max-width:700px){.search-modes .mode{flex:1}.popular{font-size:12px}}
 </style></head><body><!-- HEADER --><header>
   <div class="container nav"><a class="brand" href="#">
   <div class="brand-logo">P</div>
@@ -649,35 +658,34 @@ footer{
 </a>
 
 <nav class="navlinks">
-  <a href="#productos">Productos</a>
+  <a href="#buscar">Buscar</a>
   <a href="#categorias">Categorías</a>
   <a href="#como">Cómo funciona</a>
 </nav>
 
-<a class="btn btn-primary" href="#productos">
-  Comparar precios
+<a class="btn btn-primary" href="#buscar">
+  Buscar ahora
 </a>
 
   </div>
-</header><main><!-- HERO --><section class="hero">  <div class="container hero-grid"><div>
+</header><main><!-- HERO --><section class="hero" id="buscar">  <div class="container hero-grid"><div>
 
   <span class="eyebrow">
     🇵🇦 Hecho para Panamá
   </span>
 
   <h1>
-    Compara.<br>
-    <span>Ahorra.</span><br>
-    Compra mejor.
+    Encuentra.<br>
+    <span>Compara.</span><br>
+    Elige mejor.
   </h1>
 
   <p>
-    Encuentra y compara precios de celulares, computadoras,
-    gaming y electrónica en las tiendas de Panamá.
+    Busca productos, servicios y negocios en Panamá desde un solo lugar.
   </p>
 
   <p class="hero-highlight">
-    ✨ Sin listas interminables — solo lo que buscas.
+    ✨ De un celular a un plomero: busca lo que necesitas.
   </p>
 
   <div class="search">
@@ -685,7 +693,7 @@ footer{
     <input
       id="search"
       type="search"
-      placeholder="¿Qué estás buscando? Ej. iPhone 17, PS5, laptop..."
+      placeholder="¿Qué estás buscando? Ej. iPhone, plomero, restaurante, sofá..."
       autocomplete="off"
     >
 
@@ -695,6 +703,20 @@ footer{
 
   </div>
 
+  <div class="search-modes">
+    <button class="mode active" type="button" data-mode="Comprar">🛍️ Comprar</button>
+    <button class="mode" type="button" data-mode="Servicios">🔧 Servicios</button>
+    <button class="mode" type="button" data-mode="Negocios">📍 Negocios</button>
+  </div>
+
+  <div class="popular">
+    <span>Popular:</span>
+    <button type="button" data-search="iPhone">iPhone</button>
+    <button type="button" data-search="laptop">Laptop</button>
+    <button type="button" data-search="plomero">Plomero</button>
+    <button type="button" data-search="restaurante">Restaurante</button>
+  </div>
+
 </div>
 
 <div class="hero-card">
@@ -702,12 +724,11 @@ footer{
  <div class="brand-logo">P</div>
 
   <h3>
-    El comparador de precios de Panamá
+    Tu buscador local de Panamá 🇵🇦
   </h3>
 
   <div class="hero-card-text">
-    Busca un producto y descubre dónde puedes encontrarlo
-    a mejor precio.
+    Empieza por productos. Después ampliaremos PreferoYa para encontrar servicios y negocios cerca de ti.
   </div>
 
   <div class="stats">
@@ -742,39 +763,26 @@ footer{
 
 <div class="cats">
 
-  <button class="cat active" data-cat="Todos">
-    🔥 Todos
-  </button>
-
-  <button class="cat" data-cat="Celulares">
-    📱 Celulares
-  </button>
-
-  <button class="cat" data-cat="Computadoras">
-    💻 Computadoras
-  </button>
-
-  <button class="cat" data-cat="Gaming">
-    🎮 Gaming
-  </button>
-
-  <button class="cat" data-cat="Audio">
-    🎧 Audio
-  </button>
-
-  <button class="cat" data-cat="TV & Electrónica">
-    📺 TV & Electrónica
-  </button>
+  <button class="cat active" data-cat="Todos">🔥 Todo</button>
+  <button class="cat" data-cat="Celulares">📱 Celulares</button>
+  <button class="cat" data-cat="Computadoras">💻 Computadoras</button>
+  <button class="cat" data-cat="Gaming">🎮 Gaming</button>
+  <button class="cat" data-cat="Audio">🎧 Audio</button>
+  <button class="cat" data-cat="TV & Electrónica">📺 Electrónica</button>
+  <button class="cat future" data-cat="Servicios">🔧 Servicios</button>
+  <button class="cat future" data-cat="Negocios">📍 Negocios</button>
+  <button class="cat future" data-cat="Hogar">🏠 Hogar</button>
+  <button class="cat future" data-cat="Autos">🚗 Autos</button>
 
 </div>
 
   </div></section><!-- PRODUCTS --><section id="productos" style="padding-top:10px">  <div class="container"><div class="section-head">
 
   <div>
-    <h2>Productos destacados</h2>
+    <h2 id="resultadosTitulo">Lo más buscado</h2>
 
     <p>
-      Compara precios por tienda y encuentra la mejor opción disponible.
+      Empieza con productos y compara las opciones disponibles en Panamá.
     </p>
   </div>
 
@@ -786,7 +794,7 @@ footer{
 
   <div>
     <h2>Así funciona PreferoYa</h2>
-    <p>Comprar mejor empieza por comparar.</p>
+    <p>Encuentra lo que necesitas en pocos pasos.</p>
   </div>
 
 </div>
@@ -800,7 +808,7 @@ footer{
     <h3>Busca</h3>
 
     <p>
-      Escribe el nombre, modelo o producto que quieres comprar.
+      Escribe lo que necesitas: un producto, un servicio o un negocio.
     </p>
 
   </div>
@@ -812,7 +820,7 @@ footer{
     <h3>Compara</h3>
 
     <p>
-      Revisa diferentes tiendas y compara las opciones disponibles.
+      Revisa las opciones disponibles y compara antes de decidir.
     </p>
 
   </div>
@@ -824,7 +832,7 @@ footer{
     <h3>Elige</h3>
 
     <p>
-      Compara precio y tienda antes de tomar tu decisión.
+      Elige la opción que mejor se adapte a ti.
     </p>
 
   </div>
@@ -835,10 +843,10 @@ footer{
 
   <div>
 
-    <h2>¿No encuentras tu producto?</h2>
+    <h2>¿Buscas algo que todavía no aparece?</h2>
 
     <p>
-      Próximamente podrás pedir una comparación directamente por WhatsApp.
+      Estamos ampliando PreferoYa para incluir más productos, servicios y negocios de Panamá.
     </p>
 
   </div>
@@ -1238,14 +1246,23 @@ document
 
         const category = button.dataset.cat;
 
-        const result =
-          category === 'Todos'
-            ? products
-            : products.filter(
-                p=>String(p.cat).trim() === String(category).trim()
-              );
-
-        render(result);
+        if(['Servicios','Negocios','Hogar','Autos'].includes(category)){
+          document.getElementById('resultadosTitulo').textContent = category === 'Negocios' ? 'Negocios en PreferoYa' : category === 'Servicios' ? 'Servicios en PreferoYa' : category;
+          grid.innerHTML = `
+            <div class="no-results">
+              <strong>🚀 ${category}: próximamente</strong>
+              <span>Esta nueva sección está en construcción. PreferoYa seguirá creciendo paso a paso.</span>
+            </div>`;
+        }else{
+          document.getElementById('resultadosTitulo').textContent = category === 'Todos' ? 'Lo más buscado' : category;
+          const result =
+            category === 'Todos'
+              ? products
+              : products.filter(
+                  p=>String(p.cat).trim() === String(category).trim()
+                );
+          render(result);
+        }
 
         document
           .getElementById('productos')
@@ -1281,6 +1298,38 @@ document.addEventListener(
     }
   }
 );
+
+
+/* SEARCH MODES */
+let activeMode = 'Comprar';
+document.querySelectorAll('.mode').forEach(button=>{
+  button.addEventListener('click',()=>{
+    document.querySelectorAll('.mode').forEach(x=>x.classList.remove('active'));
+    button.classList.add('active');
+    activeMode = button.dataset.mode;
+    if(activeMode === 'Comprar'){
+      document.getElementById('resultadosTitulo').textContent = 'Lo más buscado';
+      render(products);
+    }else{
+      document.getElementById('resultadosTitulo').textContent = activeMode === 'Servicios' ? 'Servicios en PreferoYa' : 'Negocios en PreferoYa';
+      grid.innerHTML = `
+        <div class="no-results">
+          <strong>${activeMode === 'Servicios' ? '🔧 Servicios: próximamente' : '📍 Negocios: próximamente'}</strong>
+          <span>Estamos preparando esta sección para ampliar PreferoYa a todo Panamá.</span>
+        </div>`;
+    }
+  });
+});
+
+document.querySelectorAll('[data-search]').forEach(button=>{
+  button.addEventListener('click',()=>{
+    searchInput.value = button.dataset.search;
+    activeMode = 'Comprar';
+    document.querySelectorAll('.mode').forEach(x=>x.classList.remove('active'));
+    document.querySelector('.mode[data-mode="Comprar"]').classList.add('active');
+    doSearch();
+  });
+});
 
 /* INITIAL */
 
