@@ -468,6 +468,15 @@ footer{
   color:white;
 }
 
+/* BUSINESS DETAIL */
+.business-detail{display:grid;gap:14px}
+.business-detail .detail-icon{font-size:48px}
+.business-detail .detail-tag{display:inline-block;background:#eef4fb;color:#17466f;border-radius:999px;padding:6px 10px;font-size:12px;font-weight:800}
+.business-detail .detail-zone{font-weight:700;color:#17324d}
+.business-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:4px}
+.business-actions a{display:flex;align-items:center;justify-content:center;text-decoration:none}
+@media(max-width:520px){.business-actions{grid-template-columns:1fr}}
+
 /* MODAL */
 
 .modal{
@@ -883,7 +892,7 @@ footer{
 <p
   style="font-size:12px;color:var(--muted);margin-top:16px"
 >
-  Los precios affichés peuvent changer selon les promotions et le stock. Verifica el precio en la tienda antes de comprar.
+  La información del negocio puede cambiar. Verifica horarios, disponibilidad y datos de contacto antes de desplazarte.
 </p>
 
   </div></div><script>
@@ -1285,6 +1294,42 @@ const businessCategories = [
 
 ];
 
+function businessMapUrl(b){
+  const query = b.map || `${b.name} ${b.zone || ''} Panama`;
+  return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(query.trim());
+}
+
+function isMapsUrl(url){
+  return /google\.com\/maps/i.test(String(url || ''));
+}
+
+function showBusiness(b){
+  document.getElementById('modalTitle').textContent = b.name;
+  document.getElementById('modalMeta').textContent = `${b.category} · ${b.zone || 'Panamá'}`;
+  const website = b.url && !isMapsUrl(b.url)
+    ? `<a class="btn btn-primary" href="${b.url}" target="_blank" rel="noopener noreferrer">🌐 Sitio web</a>`
+    : '';
+  const phoneDigits = String(b.phone || '').replace(/[^0-9]/g,'');
+  const phone = b.phone
+    ? `<a class="btn btn-light" href="tel:${b.phone.replace(/[^+0-9]/g,'')}">📞 Llamar</a>`
+    : '';
+  const whatsapp = phoneDigits
+    ? `<a class="btn btn-light" href="https://wa.me/${phoneDigits}" target="_blank" rel="noopener noreferrer">💬 WhatsApp</a>`
+    : '';
+  const maps = `<a class="btn btn-light" href="${businessMapUrl(b)}" target="_blank" rel="noopener noreferrer">📍 Google Maps</a>`;
+
+  document.getElementById('offers').innerHTML = `
+    <div class="business-detail">
+      <div class="detail-icon">${b.icon}</div>
+      <span class="detail-tag">${b.category}</span>
+      <div class="detail-zone">📍 ${b.zone || 'Panamá'}</div>
+      <div>${b.desc || 'Información del negocio disponible en PreferoYa.'}</div>
+      ${b.phone ? `<div class="source">📞 ${b.phone}</div>` : '<div class="source">📞 Teléfono no disponible</div>'}
+      <div class="business-actions">${website}${maps}${phone}${whatsapp}</div>
+    </div>`;
+  document.getElementById('modal').classList.add('show');
+}
+
 function renderBusinesses(query=''){
   const q=normalizeSearchText(query);
   const terms=q.split(/\s+/).filter(Boolean);
@@ -1299,16 +1344,17 @@ function renderBusinesses(query=''){
     grid.innerHTML='<div class="no-results"><strong>🔎 No encontramos ese negocio todavía</strong><span>Prueba con otra búsqueda o una categoría como tecnología, ferretería o restaurante.</span></div>';
     return;
   }
-  grid.innerHTML=list.map(b=>`<article class="product">
+  grid.innerHTML=list.map((b,idx)=>`<article class="product">
     <div class="pic">${b.icon}</div>
     <div class="info">
       <div class="tag">${b.category}</div>
       <h3>${b.name}</h3>
       <div class="source">📍 ${b.zone}<br>${b.desc}</div>
       ${b.phone ? `<div class="source">📞 ${b.phone}</div>` : ''}
-      <a class="btn btn-light" href="${b.url}" target="_blank" rel="noopener noreferrer">Ver negocio</a>
+      <button class="btn btn-light business-open" type="button" data-business-index="${idx}">Ver negocio</button>
     </div>
   </article>`).join('');
+  grid.querySelectorAll('.business-open').forEach((btn,idx)=>btn.addEventListener('click',()=>showBusiness(list[idx])));
 }
 
 function normalizeSearchText(text){
