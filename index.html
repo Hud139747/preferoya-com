@@ -1200,6 +1200,50 @@ const serviceCategories = [
   {name:'Delivery y mensajería', icon:'📦', aliases:['delivery','mensajeria','envios','reparto']}
 ];
 
+/* BUSINESS DIRECTORY */
+const businessCategories = [
+  {name:'Tecnología', icon:'💻', aliases:['computadoras','software','informatica','tecnologia'], businesses:[
+    {name:'Global Technology Panamá', zone:'Obarrio', desc:'Soluciones de software y tecnología para empresas.', phone:'+507 6306-1113', url:'https://innovasoftlatam.com/distribuidor/global-technology-panama/', map:'Global Technology Panamá, Panama City'},
+    {name:'Dahua Technology Panamá', zone:'Panama City', desc:'Tecnología y sistemas de seguridad electrónica.', phone:null, url:'https://www.dahuasecurity.com/la/', map:'Dahua Technology Panama S.A., Panama City'}
+  ]},
+  {name:'Ferreterías', icon:'🔨', aliases:['ferreteria','herramientas','hogar','construccion'], businesses:[
+    {name:'miFerre', zone:'Panamá', desc:'Ferretería, hogar, construcción, electricidad y plomería.', phone:'+507 6208-1282', url:'https://www.miferrepty.com/', map:'miFerre, Panama City'},
+    {name:'North Hardware', zone:'Brisas del Golf', desc:'Herramientas y productos para hogar y proyectos.', phone:'+507 6364-2321', url:'https://www.google.com/maps/search/?api=1&query=North%20Hardware%20Brisas%20del%20Golf%20Panama', map:null}
+  ]},
+  {name:'Restaurantes', icon:'🍽️', aliases:['restaurante','comida','cafe','brunch'], businesses:[
+    {name:'Numo Panamá', zone:'San Francisco', desc:'Café, brunch y opciones de comida saludable.', phone:'+507 6908-6373', url:'https://www.google.com/maps/search/?api=1&query=Numo%20Panama%20Calle%2071%20Este%20San%20Francisco', map:null}
+  ]},
+  {name:'Hoteles', icon:'🏨', aliases:['hotel','hostal','alojamiento'], businesses:[
+    {name:'Casa Cuba Hostal', zone:'Pueblo Nuevo', desc:'Hostal en una zona céntrica de Ciudad de Panamá.', phone:'+507 224-0308', url:'https://www.google.com/maps/search/?api=1&query=Casa%20Cuba%20Hostal%20Panama', map:null}
+  ]}
+];
+
+function renderBusinesses(query=''){
+  const q=normalizeSearchText(query);
+  const terms=q.split(/\s+/).filter(Boolean);
+  const all=businessCategories.flatMap(c=>c.businesses.map(b=>({...b,category:c.name,icon:c.icon,categoryAliases:c.aliases})));
+  const list=terms.length ? all.filter(b=>{
+    const hay=normalizeSearchText([b.name,b.zone,b.desc,b.category,...b.categoryAliases].join(' '));
+    return terms.every(t=>hay.includes(t));
+  }) : all;
+  document.getElementById('resultadosTitulo').textContent='Negocios en PreferoYa';
+  document.querySelector('#productos .section-head p').textContent='Encuentra negocios y comercios en Panamá.';
+  if(!list.length){
+    grid.innerHTML='<div class="no-results"><strong>🔎 No encontramos ese negocio todavía</strong><span>Prueba con otra búsqueda o una categoría como tecnología, ferretería o restaurante.</span></div>';
+    return;
+  }
+  grid.innerHTML=list.map(b=>`<article class="product">
+    <div class="pic">${b.icon}</div>
+    <div class="info">
+      <div class="tag">${b.category}</div>
+      <h3>${b.name}</h3>
+      <div class="source">📍 ${b.zone}<br>${b.desc}</div>
+      ${b.phone ? `<div class="source">📞 ${b.phone}</div>` : ''}
+      <a class="btn btn-light" href="${b.url}" target="_blank" rel="noopener noreferrer">Ver negocio</a>
+    </div>
+  </article>`).join('');
+}
+
 function normalizeSearchText(text){
   return String(text || '').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
 }
@@ -1254,6 +1298,8 @@ function doSearch(){
 
   if(activeMode === 'Servicios') {
     renderServices(searchInput.value);
+  } else if(activeMode === 'Negocios') {
+    renderBusinesses(searchInput.value);
   } else {
     const q = normalizeText(searchInput.value);
     const terms = q.split(/\s+/).filter(Boolean);
@@ -1308,7 +1354,12 @@ document
           document.querySelectorAll('.mode').forEach(x=>x.classList.remove('active'));
           document.querySelector('.mode[data-mode="Servicios"]').classList.add('active');
           renderServices(searchInput.value);
-        }else if(['Negocios','Hogar','Autos'].includes(category)){
+        }else if(category === 'Negocios'){
+          activeMode='Negocios';
+          document.querySelectorAll('.mode').forEach(x=>x.classList.remove('active'));
+          document.querySelector('.mode[data-mode="Negocios"]').classList.add('active');
+          renderBusinesses(searchInput.value);
+        }else if(['Hogar','Autos'].includes(category)){
           document.getElementById('resultadosTitulo').textContent = category;
           grid.innerHTML = `
             <div class="no-results">
@@ -1376,12 +1427,7 @@ document.querySelectorAll('.mode').forEach(button=>{
     }else if(activeMode === 'Servicios'){
       renderServices(searchInput.value);
     }else{
-      document.getElementById('resultadosTitulo').textContent = 'Negocios en PreferoYa';
-      grid.innerHTML = `
-        <div class="no-results">
-          <strong>📍 Negocios: próximamente</strong>
-          <span>Estamos preparando esta sección para ampliar PreferoYa a todo Panamá.</span>
-        </div>`;
+      renderBusinesses(searchInput.value);
     }
   });
 });
