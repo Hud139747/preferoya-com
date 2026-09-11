@@ -517,6 +517,40 @@ footer{
   text-align:right;
 }
 
+.offer-info{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+}
+
+.offer-store{
+  font-weight:850;
+  color:var(--ink);
+}
+
+.offer-price{
+  font-size:14px;
+  font-weight:900;
+  color:#0876d1;
+}
+
+.store-btn{
+  flex-shrink:0;
+  padding:9px 12px;
+  border-radius:10px;
+  background:linear-gradient(135deg,var(--blue),var(--blue-dark));
+  color:white;
+  font-size:13px;
+  font-weight:850;
+}
+
+.price-verified{
+  color:var(--good);
+  font-size:11px;
+  font-weight:800;
+}
+
+
 /* RESPONSIVE */
 
 @media(max-width:900px){
@@ -603,6 +637,10 @@ footer{
   .cta h2{
     font-size:28px;
   }
+}
+@media(max-width:560px){
+  .offer{align-items:flex-start;flex-wrap:wrap;}
+  .store-btn{width:100%;text-align:center;}
 }
 </style></head><body><!-- HEADER --><header>
   <div class="container nav"><a class="brand" href="#">
@@ -736,7 +774,7 @@ footer{
     <h2>Productos destacados</h2>
 
     <p>
-      Compara precios de referencia y encuentra mejores opciones.
+      Compara precios por tienda y encuentra la mejor opción disponible.
     </p>
   </div>
 
@@ -837,7 +875,7 @@ footer{
 <p
   style="font-size:12px;color:var(--muted);margin-top:16px"
 >
-  Los precios son de referencia y deben verificarse antes de comprar.
+  Los precios affichés peuvent changer selon les promotions et le stock. Verifica el precio en la tienda antes de comprar.
 </p>
 
   </div></div><script>
@@ -852,10 +890,10 @@ const products = [
     source:'Desde $914.99 · 14 ofertas / 8 fuentes',
     icon:'📱',
     offers:[
-      {store:'Flash Market PTY',price:914.99,url:'#'},
-      {store:'Tecnoland',price:null,url:'#'},
-      {store:'Panafoto',price:null,url:'https://www.panafoto.com/'},
-      {store:'Multimax',price:null,url:'https://www.multimax.net/'}
+      {store:'Flash Market PTY',price:914.99,url:'https://www.flashmarketpty.com/'},
+      {store:'Tecnoland',price:null,url:'https://tecnoland.catalog.kyte.site/'},
+      {store:'Panafoto',price:null,url:'https://www.panafoto.com/iphone-17-256gb-blanco-157849.html'},
+      {store:'Multimax',price:null,url:'https://www.multimax.net/products/iphone-17-6-3-256gb'}
     ]
   },
   {
@@ -865,8 +903,8 @@ const products = [
     source:'Desde $159.97 · 6 ofertas / 3 fuentes',
     icon:'📱',
     offers:[
-      {store:'Multimax',price:null,url:'https://www.multimax.net/'},
-      {store:'Panafoto',price:null,url:'https://www.panafoto.com/'},
+      {store:'Multimax',price:159.97,url:'https://www.multimax.net/products/samsung-galaxy-a17'},
+      {store:'Panafoto',price:259.95,url:'https://www.panafoto.com/samsung-galaxy-a17-128gb-6gb-ram-negro-157540.html'},
       {store:'Samsung Panamá',price:null,url:'https://shop.samsung.com/latin/pa/'}
     ]
   },
@@ -879,7 +917,7 @@ const products = [
     offers:[
       {store:'Panafoto',price:null,url:'https://www.panafoto.com/'},
       {store:'Multimax',price:null,url:'https://www.multimax.net/'},
-      {store:'Otros comercios',price:null,url:'#'}
+      {store:'Otros comercios',price:null,url:'https://www.google.com/search?q='+encodeURIComponent(p.name+' Panama tienda')}
     ]
   },
   {
@@ -890,7 +928,7 @@ const products = [
     icon:'🎮',
     offers:[
       {store:'Panafoto',price:629.95,url:'https://www.panafoto.com/'},
-      {store:'Otros comercios',price:null,url:'#'}
+      {store:'Otros comercios',price:null,url:'https://www.google.com/search?q='+encodeURIComponent(p.name+' Panama tienda')}
     ]
   },
   {
@@ -901,7 +939,7 @@ const products = [
     icon:'🎧',
     offers:[
       {store:'Arrocha',price:149,url:'https://arrocha.com/'},
-      {store:'MacPower',price:null,url:'#'},
+      {store:'MacPower',price:null,url:'https://macpowerstore.com/'},
       {store:'Titan',price:null,url:'https://titan.com.pa/'},
       {store:'Panafoto',price:null,url:'https://www.panafoto.com/'}
     ]
@@ -916,7 +954,7 @@ const products = [
       {store:'Prixe Games',price:510,url:'https://prixegames.com/'},
       {store:'PanaStop',price:null,url:'https://panastop.com/'},
       {store:'Multimax',price:null,url:'https://www.multimax.net/'},
-      {store:'Panafoto / Photura',price:null,url:'#'}
+      {store:'Panafoto / Photura',price:null,url:'https://www.photura.com/'}
     ]
   },
   {
@@ -928,7 +966,7 @@ const products = [
     offers:[
       {store:'Samsung Panamá',price:459,url:'https://shop.samsung.com/latin/pa/'},
       {store:'Multimax',price:null,url:'https://www.multimax.net/'},
-      {store:'Otros comercios',price:null,url:'#'}
+      {store:'Otros comercios',price:null,url:'https://www.google.com/search?q='+encodeURIComponent(p.name+' Panama tienda')}
     ]
   },
   {
@@ -940,7 +978,7 @@ const products = [
     offers:[
       {store:'PanaStop',price:39.99,url:'https://panastop.com/'},
       {store:'Prixe Games',price:null,url:'https://prixegames.com/'},
-      {store:'Photura',price:null,url:'#'},
+      {store:'Photura',price:null,url:'https://www.photura.com/'},
       {store:'Panafoto',price:null,url:'https://www.panafoto.com/'}
     ]
   },
@@ -953,7 +991,7 @@ const products = [
     offers:[
       {store:'PanaStop',price:309.99,url:'https://panastop.com/'},
       {store:'Panafoto',price:null,url:'https://www.panafoto.com/'},
-      {store:'Selectopa',price:null,url:'#'},
+      {store:'Selectopa',price:null,url:'https://selectopa.com/'},
       {store:'Titan',price:null,url:'https://titan.com.pa/'}
     ]
   },
@@ -1073,7 +1111,7 @@ function showOffers(i){
            href="${o.url}"
            target="_blank"
            rel="noopener noreferrer"
-           onclick="if(this.getAttribute('href')==='#'){event.preventDefault();alert('El enlace de esta tienda todavía no está configurado.');}">
+           >
           Ir a la tienda
         </a>
       </div>
@@ -1095,17 +1133,32 @@ function closeModal(){
 
 function doSearch(){
 
-  const q = searchInput.value
-    .toLowerCase()
-    .trim();
+  function normalizeText(text){
+    return String(text)
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g,'')
+      .toLowerCase()
+      .trim();
+  }
 
-  const result = q
-    ? products.filter(p =>
-        (p.name + ' ' + p.cat)
-        .toLowerCase()
-        .includes(q)
-      )
-    : products;
+  function searchableText(p){
+    return normalizeText([
+      p.name,
+      p.cat,
+      ...(p.aliases || []),
+      ...(p.offers || []).map(o => o.store)
+    ].join(' '));
+  }
+
+  const q = normalizeText(searchInput.value);
+  const terms = q.split(/\s+/).filter(Boolean);
+
+  const result = !terms.length
+    ? products
+    : products.filter(p => {
+        const haystack = searchableText(p);
+        return terms.every(term => haystack.includes(term));
+      });
 
   render(result);
 
