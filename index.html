@@ -921,7 +921,7 @@ const products = [
     offers:[
       {store:'Panafoto',price:null,url:'https://www.panafoto.com/'},
       {store:'Multimax',price:null,url:'https://www.multimax.net/'},
-      {store:'Otros comercios',price:null,url:'https://www.google.com/search?q='+encodeURIComponent(p.name+' Panama tienda')}
+      {store:'Otros comercios',price:null,url:'https://www.google.com/search?q='+encodeURIComponent('MacBook Air M4 Panama tienda')}
 ,
       {store:'Rodelag',price:null,url:'https://rodelag.com/collections/computacion'} ,
       {store:'Do it Center',price:null,url:'https://www.doitcenter.com.pa/catalogo'} ,
@@ -935,7 +935,7 @@ const products = [
     icon:'🎮',
     offers:[
       {store:'Panafoto',price:629.95,url:'https://www.panafoto.com/'},
-      {store:'Otros comercios',price:null,url:'https://www.google.com/search?q='+encodeURIComponent(p.name+' Panama tienda')}
+      {store:'Otros comercios',price:null,url:'https://www.google.com/search?q='+encodeURIComponent('PlayStation 5 Panama tienda')}
 ,
       {store:'Do it Center',price:null,url:'https://www.doitcenter.com.pa/catalogo'} ,
       {store:'Novey',price:null,url:'https://www.novey.com.pa/productos-tv-audio-electronica-y-celulares'} ,
@@ -981,7 +981,7 @@ const products = [
     offers:[
       {store:'Samsung Panamá',price:459,url:'https://shop.samsung.com/latin/pa/'},
       {store:'Multimax',price:null,url:'https://www.multimax.net/'},
-      {store:'Otros comercios',price:null,url:'https://www.google.com/search?q='+encodeURIComponent(p.name+' Panama tienda')}
+      {store:'Otros comercios',price:null,url:'https://www.google.com/search?q='+encodeURIComponent('Samsung Galaxy A57 5G Panama tienda')}
 ,
       {store:'Novey',price:null,url:'https://www.novey.com.pa/productos-tv-audio-electronica-y-celulares'} ,
       {store:'Rodelag',price:null,url:'https://rodelag.com/'}    ]
@@ -1229,7 +1229,7 @@ document
           category === 'Todos'
             ? products
             : products.filter(
-                p=>p.cat === category
+                p=>String(p.cat).trim() === String(category).trim()
               );
 
         render(result);
