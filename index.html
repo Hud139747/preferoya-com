@@ -728,7 +728,7 @@ footer{
   </h3>
 
   <div class="hero-card-text">
-    Empieza por productos. Después ampliaremos PreferoYa para encontrar servicios y negocios cerca de ti.
+    Ahora puedes explorar productos y servicios. PreferoYa seguirá creciendo para cubrir todo Panamá.
   </div>
 
   <div class="stats">
@@ -769,10 +769,10 @@ footer{
   <button class="cat" data-cat="Gaming">🎮 Gaming</button>
   <button class="cat" data-cat="Audio">🎧 Audio</button>
   <button class="cat" data-cat="TV & Electrónica">📺 Electrónica</button>
-  <button class="cat future" data-cat="Servicios">🔧 Servicios</button>
-  <button class="cat future" data-cat="Negocios">📍 Negocios</button>
-  <button class="cat future" data-cat="Hogar">🏠 Hogar</button>
-  <button class="cat future" data-cat="Autos">🚗 Autos</button>
+  <button class="cat" data-cat="Servicios">🔧 Servicios</button>
+  <button class="cat" data-cat="Negocios">📍 Negocios</button>
+  <button class="cat" data-cat="Hogar">🏠 Hogar</button>
+  <button class="cat" data-cat="Autos">🚗 Autos</button>
 
 </div>
 
@@ -782,7 +782,7 @@ footer{
     <h2 id="resultadosTitulo">Lo más buscado</h2>
 
     <p>
-      Empieza con productos y compara las opciones disponibles en Panamá.
+      Busca productos, servicios y opciones locales disponibles en Panamá.
     </p>
   </div>
 
@@ -1176,6 +1176,61 @@ function closeModal(){
 
 }
 
+/* SERVICE CATEGORIES */
+const serviceCategories = [
+  {name:'Electricista', icon:'⚡', aliases:['electricidad','instalacion electrica','electrician']},
+  {name:'Plomero', icon:'🚰', aliases:['plomeria','fontanero','tuberias']},
+  {name:'Aire acondicionado', icon:'❄️', aliases:['aire acondicionado','ac','reparacion aire','climatizacion']},
+  {name:'Reparación de celulares', icon:'📱', aliases:['reparacion iphone','reparacion samsung','celular roto','telefono roto']},
+  {name:'Reparación de computadoras', icon:'💻', aliases:['reparacion pc','computadora dañada','laptop dañada','soporte tecnico']},
+  {name:'Mecánico', icon:'🔧', aliases:['mecanica','taller mecanico','auto','carro']},
+  {name:'Limpieza', icon:'🧹', aliases:['limpieza de casa','limpieza oficinas','cleaning']},
+  {name:'Mudanzas', icon:'🚚', aliases:['mudanza','mudanzas panama','flete','transporte']},
+  {name:'Cerrajero', icon:'🔑', aliases:['cerrajeria','llaves','cerradura']},
+  {name:'Reparaciones del hogar', icon:'🏠', aliases:['mantenimiento hogar','reparaciones casa','handyman']},
+  {name:'Pintor', icon:'🎨', aliases:['pintura','pintura residencial','pintor de casas']},
+  {name:'Carpintero', icon:'🪚', aliases:['carpinteria','muebles a medida','madera']},
+  {name:'Lavandería', icon:'🧺', aliases:['lavanderia','ropa','dry cleaning']},
+  {name:'Fotógrafo', icon:'📸', aliases:['fotografia','fotografo eventos','sesion fotos']},
+  {name:'Impresión', icon:'🖨️', aliases:['imprenta','impresiones','copias','diseño grafico']},
+  {name:'Peluquería', icon:'💇', aliases:['barberia','barbero','salon','corte de cabello']},
+  {name:'Manicure y pedicure', icon:'💅', aliases:['manicure','pedicure','uñas','nails']},
+  {name:'Cuidado de mascotas', icon:'🐕', aliases:['mascotas','veterinario','pet sitter','perros']},
+  {name:'Clases particulares', icon:'👨‍🏫', aliases:['tutor','tutoria','clases','profesor particular']},
+  {name:'Delivery y mensajería', icon:'📦', aliases:['delivery','mensajeria','envios','reparto']}
+];
+
+function normalizeSearchText(text){
+  return String(text || '').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
+}
+
+function renderServices(query=''){
+  const q=normalizeSearchText(query);
+  const terms=q.split(/\s+/).filter(Boolean);
+  const list=terms.length ? serviceCategories.filter(s=>{
+    const hay=normalizeSearchText([s.name,...s.aliases].join(' '));
+    return terms.every(t=>hay.includes(t));
+  }) : serviceCategories;
+  document.getElementById('resultadosTitulo').textContent='Servicios en PreferoYa';
+  document.querySelector('#productos .section-head p').textContent='Encuentra el servicio que necesitas en Panamá.';
+  if(!list.length){
+    grid.innerHTML=`<div class="no-results"><strong>🔎 No encontramos ese servicio todavía</strong><span>Prueba otra búsqueda o elige una categoría de servicios.</span></div>`;
+    return;
+  }
+  grid.innerHTML=list.map(s=>`<article class="product-card service-card" data-service="${s.name}">
+    <div class="product-image"><div class="service-icon">${s.icon}</div></div>
+    <div class="product-info">
+      <h3>${s.name}</h3>
+      <p class="muted">Servicio en Panamá</p>
+      <button class="btn btn-primary service-btn" type="button" data-service-search="${s.name}">Buscar opciones</button>
+    </div>
+  </article>`).join('');
+  grid.querySelectorAll('[data-service-search]').forEach(btn=>btn.addEventListener('click',()=>{
+    searchInput.value=btn.dataset.serviceSearch;
+    doSearch();
+  }));
+}
+
 /* SEARCH */
 
 function doSearch(){
@@ -1197,17 +1252,19 @@ function doSearch(){
     ].join(' '));
   }
 
-  const q = normalizeText(searchInput.value);
-  const terms = q.split(/\s+/).filter(Boolean);
-
-  const result = !terms.length
-    ? products
-    : products.filter(p => {
-        const haystack = searchableText(p);
-        return terms.every(term => haystack.includes(term));
-      });
-
-  render(result);
+  if(activeMode === 'Servicios') {
+    renderServices(searchInput.value);
+  } else {
+    const q = normalizeText(searchInput.value);
+    const terms = q.split(/\s+/).filter(Boolean);
+    const result = !terms.length
+      ? products
+      : products.filter(p => {
+          const haystack = searchableText(p);
+          return terms.every(term => haystack.includes(term));
+        });
+    render(result);
+  }
 
   document
     .getElementById('productos')
@@ -1246,12 +1303,17 @@ document
 
         const category = button.dataset.cat;
 
-        if(['Servicios','Negocios','Hogar','Autos'].includes(category)){
-          document.getElementById('resultadosTitulo').textContent = category === 'Negocios' ? 'Negocios en PreferoYa' : category === 'Servicios' ? 'Servicios en PreferoYa' : category;
+        if(category === 'Servicios'){
+          activeMode='Servicios';
+          document.querySelectorAll('.mode').forEach(x=>x.classList.remove('active'));
+          document.querySelector('.mode[data-mode="Servicios"]').classList.add('active');
+          renderServices(searchInput.value);
+        }else if(['Negocios','Hogar','Autos'].includes(category)){
+          document.getElementById('resultadosTitulo').textContent = category;
           grid.innerHTML = `
             <div class="no-results">
               <strong>🚀 ${category}: próximamente</strong>
-              <span>Esta nueva sección está en construcción. PreferoYa seguirá creciendo paso a paso.</span>
+              <span>Estamos preparando esta sección para ampliar PreferoYa a todo Panamá.</span>
             </div>`;
         }else{
           document.getElementById('resultadosTitulo').textContent = category === 'Todos' ? 'Lo más buscado' : category;
@@ -1309,12 +1371,15 @@ document.querySelectorAll('.mode').forEach(button=>{
     activeMode = button.dataset.mode;
     if(activeMode === 'Comprar'){
       document.getElementById('resultadosTitulo').textContent = 'Lo más buscado';
+      document.querySelector('#productos .section-head p').textContent='Busca productos, servicios y opciones locales disponibles en Panamá.';
       render(products);
+    }else if(activeMode === 'Servicios'){
+      renderServices(searchInput.value);
     }else{
-      document.getElementById('resultadosTitulo').textContent = activeMode === 'Servicios' ? 'Servicios en PreferoYa' : 'Negocios en PreferoYa';
+      document.getElementById('resultadosTitulo').textContent = 'Negocios en PreferoYa';
       grid.innerHTML = `
         <div class="no-results">
-          <strong>${activeMode === 'Servicios' ? '🔧 Servicios: próximamente' : '📍 Negocios: próximamente'}</strong>
+          <strong>📍 Negocios: próximamente</strong>
           <span>Estamos preparando esta sección para ampliar PreferoYa a todo Panamá.</span>
         </div>`;
     }
@@ -1324,9 +1389,11 @@ document.querySelectorAll('.mode').forEach(button=>{
 document.querySelectorAll('[data-search]').forEach(button=>{
   button.addEventListener('click',()=>{
     searchInput.value = button.dataset.search;
-    activeMode = 'Comprar';
+    const serviceTerms=['plomero','electricista','aire acondicionado'];
+    const isService=serviceTerms.some(t=>normalizeSearchText(button.dataset.search).includes(t));
+    activeMode = isService ? 'Servicios' : 'Comprar';
     document.querySelectorAll('.mode').forEach(x=>x.classList.remove('active'));
-    document.querySelector('.mode[data-mode="Comprar"]').classList.add('active');
+    document.querySelector(`.mode[data-mode="${activeMode}"]`).classList.add('active');
     doSearch();
   });
 });
